@@ -40,6 +40,20 @@
         created() {
             console.log("created");
             this.loading = true;
+
+            const p = new Promise((resolve, reject) => {
+                console.log(resolve);
+                console.log(reject);
+
+                setTimeout(() => resolve("Hello"), 300);
+            })
+            .then(result => console.log(`success2 ${result}`))
+            .then(result => console.log(`success ${result}`))
+            .catch(result => console.log(`error ${result}`));
+
+            console.log("cis");
+            console.log(p);
+
             setTimeout(() => {
                 this.bookables = [
                     {
