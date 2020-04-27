@@ -1,0 +1,40 @@
+version: '3'
+
+networks:
+  public-net:
+    external: true
+  private-net:
+    external: true
+
+services:
+  laravelbnb:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: laravelbnb/laravel6:dev
+    restart: unless-stopped
+    tty: true
+    working_dir: /var/www/html
+    logging:
+      driver: "json-file"
+      options:
+          max-file: "2"
+          max-size: "10m"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=public-net"
+      - "traefik.frontend.rule=Host:laravelbnb.local.my"
+      - "traefik.port=80"
+    networks:
+      - public-net
+      - private-net
+    volumes:
+      - .:/var/www/html
+    environment:
+      - WEB_DOCUMENT_ROOT=/var/www/html/public
+      - WEB_DOCUMENT_INDEX=index.php
+      - WEB_ALIAS_DOMAIN=laravelbnb.local.my
+      - php.error_reporting=E_ALL & ~E_STRICT
+      - php.short_open_tag=On
+      - php.expose_php=Off
+      - php.display_errors=On
