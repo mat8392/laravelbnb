@@ -9,14 +9,16 @@
             <div class="row mb-4" v-for="row in rows" :key="'row' + row">
 
                 <div
-                    class="col"
+                    class="col d-flex align-items-strecth"
                     v-for="(bookable, column) in bookablesInRow(row)"
                     :key="'row' + row + column">
                     <bookable-list-item
-                        :item-title=bookable.title
-                        :item-content=bookable.content
-                        :price="10001"
+                        v-bind="bookable"
                         >
+                        <!-- v-bind="bookable" is shorthand for below -->
+                        <!-- :title=bookable.title
+                        :description=bookable.description
+                        :price=bookable.id -->
                         <!-- v-for need bind key with index but if have id can use id -->
                     </bookable-list-item>
                 </div>
@@ -41,52 +43,15 @@
             console.log("created");
             this.loading = true;
 
-            const p = new Promise((resolve, reject) => {
-                console.log(resolve);
-                console.log(reject);
+           const request = axios.get("/api/bookables")
+           .then(response => {
+                this.bookables = response.data.data;
+                this.bookables.push({ title: "x", description: "y" });
+                this.loading = false;
+            });
 
-                setTimeout(() => resolve("Hello"), 300);
-            })
-            .then(result => console.log(`success2 ${result}`))
-            .then(result => console.log(`success ${result}`))
-            .catch(result => console.log(`error ${result}`));
+           console.log(request);
 
-            console.log("cis");
-            console.log(p);
-
-            setTimeout(() => {
-                this.bookables = [
-                    {
-                        title: "Cheap VIlla !!!",
-                        content: "A very Cheap villa"
-                    },
-                    {
-                        title: "Cheap VIlla 2 !!",
-                        content: "A very Cheap villa 2 !!"
-                    },
-                    {
-                        title: "Cheap VIlla 3 !!",
-                        content: "A very Cheap villa 3 !!"
-                    },
-                    {
-                        title: "Cheap VIlla 4 !!",
-                        content: "A very Cheap villa 4 !!"
-                    },
-                    {
-                        title: "Cheap VIlla 5 !!",
-                        content: "A very Cheap villa 5 !!"
-                    },
-                    {
-                        title: "Cheap VIlla 6 !!",
-                        content: "A very Cheap villa 6 !!"
-                    },
-                    {
-                        title: "Cheap VIlla 7 !!",
-                        content: "A very Cheap villa 7 !!"
-                    }
-                ];
-            }, 2000);
-            this.loading = false;
             // setTimeout(() => {
             //     console.log("First");
             //     this.bookable1.title = "You will see this ~~";
