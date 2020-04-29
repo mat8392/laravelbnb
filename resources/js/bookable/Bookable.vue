@@ -14,17 +14,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <availablity></availablity>
+        <div class="col-md-4 pb-4">
+            <availability></availability>
         </div>
     </div>
 </template>
 
 <script>
-    import Availablity from "./Availablity";
+    import Availability from "./Availability";
     export default {
         components: {
-            Availablity
+            Availability
         },  
         data() {
             return {
@@ -42,5 +42,5 @@
                 this.bookable = response.data.data;
             }); //es6
         }
-    }
+    };
 </script>
