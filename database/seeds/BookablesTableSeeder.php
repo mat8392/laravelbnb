@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Bookable;
 
-class BookableTableSeeder extends Seeder
+class BookablesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
